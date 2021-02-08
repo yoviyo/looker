@@ -81,6 +81,17 @@ view: order_items {
     sql: ${TABLE}."SHIPPED_AT" ;;
   }
 
+  dimension_group: fulfillment {
+    type: duration
+    intervals: [
+      hour,
+      day,
+      week
+  ]
+  sql_start: ${created_raw} ;;
+  sql_end: ${shipped_raw} ;;
+  }
+
   dimension: status {
     type: string
     sql: ${TABLE}."STATUS" ;;

@@ -12,6 +12,13 @@ view: inventory_items {
   dimension: cost {
     type: number
     sql: ${TABLE}."COST" ;;
+    value_format_name: usd
+  }
+
+  dimension: tax_amount {
+    type: number
+    sql: ${cost}*0.06 ;;
+    value_format_name: usd
   }
 
   dimension_group: created {

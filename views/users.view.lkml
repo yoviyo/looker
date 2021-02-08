@@ -46,7 +46,7 @@ view: users {
 
   dimension: first_name {
     type: string
-    sql: ${TABLE}."FIRST_NAME" ;;
+    sql: UPPER(${TABLE}."FIRST_NAME") ;;
   }
 
   dimension: gender {
