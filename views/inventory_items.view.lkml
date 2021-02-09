@@ -76,6 +76,26 @@ view: inventory_items {
     sql: ${TABLE}."PRODUCT_SKU" ;;
   }
 
+  # ----- CUSTOM MADE ------
+
+  measure: count_distinct_sku {
+    type: count_distinct
+    sql: ${product_sku} ;;
+  }
+
+  measure: total_cost {
+    type: sum
+    sql: ${cost} ;;
+    value_format_name: usd
+  }
+
+  measure: average_cost {
+    type: average
+    sql: ${cost} ;;
+    value_format_name: usd
+  }
+  # ----- CUSTOM MADE END -------
+
   dimension_group: sold {
     type: time
     timeframes: [

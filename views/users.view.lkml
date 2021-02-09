@@ -14,6 +14,26 @@ view: users {
     sql: ${TABLE}."AGE" ;;
   }
 
+  # ----- CUSTOM MADE ------
+  dimension: age_tier {
+    type: tier
+    tiers: [0,10,20,30,40,50,60,70,80]
+    style: integer
+    sql: ${age} ;;
+  }
+
+  measure: avg_users {
+    type: average
+    sql: ${age} ;;
+  }
+
+  dimension: location {
+    type: location
+    sql_latitude: ${latitude} ;;
+    sql_longitude: ${longitude} ;;
+  }
+  # ----- CUSTOM MADE END------
+
   dimension: city {
     type: string
     sql: ${TABLE}."CITY" ;;

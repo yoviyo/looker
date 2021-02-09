@@ -5,6 +5,7 @@ view: order_items {
 
   dimension: id {
     primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}."ID" ;;
   }
@@ -81,7 +82,10 @@ view: order_items {
     sql: ${TABLE}."SHIPPED_AT" ;;
   }
 
-  dimension_group: fulfillment {
+  # ----- CUSTOM MADE ------
+
+  dimension_group: shipping_time {
+    label: "Shipping times"
     type: duration
     intervals: [
       hour,
@@ -91,6 +95,14 @@ view: order_items {
   sql_start: ${created_raw} ;;
   sql_end: ${shipped_raw} ;;
   }
+
+  dimension: long_shipping_time {
+    description: "Yes means the order took over 7 days to ship"
+    type: yesno
+    sql: ${days_shipping_time} > 7 ;;
+  }
+
+  # ----- CUSTOM MADE END ------
 
   dimension: status {
     type: string
@@ -104,8 +116,9 @@ view: order_items {
   }
 
   measure: count {
+    label: "Number of order items"
     type: count
-    drill_fields: [detail*]
+    drill_fields: [order_detail*]
   }
 
   # ----- Sets of fields for drilling ------
@@ -114,6 +127,17 @@ view: order_items {
       id,
       inventory_items.product_name,
       inventory_items.id,
+      users.last_name,
+      users.first_name,
+      users.id
+    ]
+  }
+  set: order_detail {
+    fields: [
+      id,
+      inventory_items.product_name,
+      inventory_items.id,
+      orders.id,
       users.last_name,
       users.first_name,
       users.id
