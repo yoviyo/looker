@@ -102,6 +102,12 @@ view: order_items {
     sql: ${days_shipping_time} > 7 ;;
   }
 
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name:  usd
+  }
+
   # ----- CUSTOM MADE END ------
 
   dimension: status {
