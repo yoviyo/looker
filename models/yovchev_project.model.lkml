@@ -75,6 +75,26 @@ explore: products {
   }
 }
 
-explore: users {}
+explore: users{
+  join: order_items {
+    type:  left_outer
+    relationship: one_to_many
+    sql_on: ${users.id} = ${order_items.user_id} ;;
+  }
+
+  join: user_order_facts_new {
+    type:  left_outer
+    relationship: one_to_one
+    sql_on: ${users.id} = ${user_order_facts_new.user_id} ;;
+  }
+}
 
 explore: user_order_facts {}
+
+access_grant: yovi_only {
+
+  user_attribute: locale
+
+  allowed_values: [ "en" ]
+
+}
